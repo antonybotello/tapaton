@@ -1,0 +1,51 @@
+{% extends 'partials/body.html' %}
+{% load crispy_forms_tags %}
+{% block contenido %}
+<div class="container">
+    <div class="row my-4">
+        <div class="col-md-4">
+            <div class="border bg-white p-3">
+                <h4>Agregar Tapa</h4>
+                <hr>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <input class="btn btn-success btn-block"
+                        type="submit" Value="Agregar Tapa">
+                </form>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="form-group pull-right col-md-4">
+                <input type="text" class="search form-control" 
+                placeholder="Que estas buscando?">
+                <span class="counter pull-right col-md-4 ubiq"></span>
+            </div>
+            <form id="form1">
+
+                <table class="table bg-white table-bordered results">
+                    <thead class="bg-info">
+                        <tr class="text-white">
+                            <th scope="col">Aprendiz</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Cantidad</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tapa in tapas %}
+                        <tr>
+
+                            <td>{{tapa.aprendiz}}</td>
+                            <td>{{tapa.fecha}}</td>
+                            <td>{{tapa.cantidad}}</td>
+                        </tr>
+                        {% endfor%}
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock contenido %}

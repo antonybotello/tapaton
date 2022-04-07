@@ -1,0 +1,25 @@
+<!-- Modal -->
+<div class="modal fade show" id="exampleModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true" role="dialog" style="display: block;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Eliminar {{titulo_pagina}}</h5>
+                <a class="btn-close"
+                    data-bs-dismiss="modal" href="{{url_back}}" aria-label="Close"></a>
+            </div>
+            <div class="modal-body">
+                <p>¿Esta seguro de {{accion_txt}}?</p>
+            </div>
+            <div class="modal-footer">
+                <form method="POST">
+                    {% csrf_token %}
+                <a class="btn btn-secondary"
+                    data-bs-dismiss="modal" href="{{url_back}}">Cancelar</a>
+                <input type="submit" class="btn btn-danger" value="Eliminar"></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-backdrop fade show"></div>

@@ -1,0 +1,16 @@
+{% load crispy_forms_tags %}
+
+{% block contenido %}
+{% include "contabilidad/fondo.html" %}
+{% include "modals/modal-detalle.html" %}
+
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input class="btn btn-success btn-block"
+        type="submit" Value="Agregar Fondo">
+</form>
+
+{% endblock contenido %}
+                
+         
