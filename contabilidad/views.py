@@ -9,28 +9,33 @@ from django.contrib import messages
 def tapa(request):
     titulo_pagina = "Tapas"
     tapas = Tapa.objects.all()
-    #items= Tapa.objects.raw('SELECT * FROM contabilidad_Tapa')
     if request.method == 'POST':
         form = TapaForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('contabilidad-tapa')
+        if datetime.today().weekday() == 4:
+            if form.is_valid():
+
+                form.save()
+                return redirect('contabilidad-tapa')
+        else:
+            messages.warning(
+                request, f'Hoy no es día de agregar fondos!!!')
     else:
         form = TapaForm()
-        context = {
-            "titulo_pagina": titulo_pagina,
-            "tapas": tapas,
-            "form": form
-        }
+    context = {
+        "titulo_pagina": titulo_pagina,
+        "tapas": tapas,
+        "form": form
+    }
     return render(request, "contabilidad/tapa.html", context)
 
 
 def fondo(request):
     titulo_pagina = "Fondos"
     fondos_detalle = DetalleFondo.objects.all()
-    if request.method == 'POST' :
-        if datetime.today().weekday()==3:
-            fecha_aux = f"{datetime.now().year}-{datetime.now().month}-{datetime.now().day}"
+    if request.method == 'POST':
+        if datetime.today().weekday() == 4:
+            #fecha_aux = f"{datetime.now().year}-{datetime.now().month}-{datetime.now().day}"
+            fecha_aux = datetime.now().strftime("%Y-%m-%d")
             modelo1 = Fondo.objects.create(
                 fecha=fecha_aux
             )
@@ -42,7 +47,7 @@ def fondo(request):
             return redirect("contabilidad-detallefondo", pk=modelo2.id)
         else:
             messages.warning(
-            request, f'Hoy no es día de agregar fondos!!!')
+                request, f'Hoy no es día de agregar fondos!!!')
     context = {
         "titulo_pagina": titulo_pagina,
         "fondos_detalle": fondos_detalle,
@@ -53,13 +58,13 @@ def fondo(request):
 def detalle_fondo(request, pk):
     titulo_pagina = f"Nueva Contribución"
     fondos_detalle = DetalleFondo.objects.all()
-    fondo_obj=DetalleFondo.objects.get(id=pk)
-    url_back="/contabilidad/fondo"
-    #print(fondo_obj.equipo)
-    if fondo_obj.equipo!=None:
+    fondo_obj = DetalleFondo.objects.get(id=pk)
+    url_back = "/contabilidad/fondo"
+    # print(fondo_obj.equipo)
+    if fondo_obj.equipo != None:
         DetalleFondo.objects.filter(id=pk).update(pagado=1)
         messages.success(
-                    request, f'Contribución pagada!')
+            request, f'Contribución pagada!')
         return redirect('contabilidad-fondo')
     else:
         if request.method == 'POST':
@@ -75,30 +80,31 @@ def detalle_fondo(request, pk):
         else:
             form = DetalleFondoForm()
     context = {
-        'fondos_detalle':fondos_detalle,
+        'fondos_detalle': fondos_detalle,
         'titulo_pagina': titulo_pagina,
         "form": form,
-        'url_back':url_back,
+        'url_back': url_back,
     }
     return render(request, "contabilidad/detalle-fondo.html", context)
+
 
 def detalle_fondo_delete(request, pk):
     titulo_pagina = f"Fondos"
     fondos_detalle = DetalleFondo.objects.all()
-    accion_txt="eliminar el registro de la contribución"
-    url_back="/contabilidad/fondo"
-    det_fo_obj=DetalleFondo.objects.get(id=pk)
-    fo_obj=det_fo_obj.fondo
+    accion_txt = "eliminar el registro de la contribución"
+    url_back = "/contabilidad/fondo"
+    det_fo_obj = DetalleFondo.objects.get(id=pk)
+    fo_obj = det_fo_obj.fondo
     if request.method == 'POST':
         det_fo_obj.delete()
         fo_obj.delete()
         messages.success(
             request, f'La Contribucion se ha eliminado!')
         return redirect('contabilidad-fondo')
-    
+
     context = {
-        'accion_txt':accion_txt,
-        'url_back':url_back,
+        'accion_txt': accion_txt,
+        'url_back': url_back,
         'titulo_pagina': titulo_pagina,
         "fondos_detalle": fondos_detalle,
     }

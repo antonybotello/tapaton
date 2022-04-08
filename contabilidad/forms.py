@@ -5,7 +5,7 @@ from contabilidad.models import DetalleFondo, Fondo, Tapa
 class TapaForm(forms.ModelForm):
     class Meta:
         model= Tapa
-        fields= ['fecha', 'cantidad','aprendiz']
+        fields= ['aprendiz','cantidad' ]
         #fields= '__all__'
 
 

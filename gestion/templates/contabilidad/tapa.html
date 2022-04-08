@@ -28,6 +28,7 @@
                     <thead class="bg-info">
                         <tr class="text-white">
                             <th scope="col">Aprendiz</th>
+                            <th scope="col">Equipo</th>
                             <th scope="col">Fecha</th>
                             <th scope="col">Cantidad</th>
 
@@ -38,10 +39,12 @@
                         <tr>
 
                             <td>{{tapa.aprendiz}}</td>
+                            <td>{{tapa.aprendiz.equipo}}</td>
                             <td>{{tapa.fecha}}</td>
                             <td>{{tapa.cantidad}}</td>
                         </tr>
                         {% endfor%}
+                       
                     </tbody>
                 </table>
             </form>

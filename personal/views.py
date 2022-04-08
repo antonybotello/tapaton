@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
+from contabilidad.models import Tapa
 from personal.forms import AprendizForm, EquipoForm
 from personal.models import Aprendiz, Equipo
-
+from django.db.models import Sum
 from django.contrib import messages
 
 def aprendiz(request):
@@ -17,17 +18,24 @@ def aprendiz(request):
             return redirect('personal-aprendiz')
     else:
         form= AprendizForm()
-        context={
-            "titulo_pagina": titulo_pagina,
-            "aprendices": aprendices,
-            "form":form
-        }
+    context={
+        "titulo_pagina": titulo_pagina,
+        "aprendices": aprendices,
+        "form":form
+    }
     return render(request, "personal/aprendiz.html",context)
 
 def equipo(request):
     titulo_pagina="Equipos"
     equipos= Equipo.objects.all()
-    #items= Aprendiz.objects.raw('SELECT * FROM personal_aprendiz')
+    
+    puntos= list(Tapa.objects.values('aprendiz').annotate(puntos=Sum('cantidad')))
+    for i in range(len(puntos) ):
+        puntos[i]["aprendiz"]=Aprendiz.objects.get(id=puntos[i]["aprendiz"]).equipo
+        puntos[i]["puntos"]=puntos[i]["puntos"]//15
+    
+    print( puntos)
+  
     if request.method == 'POST':
         form= EquipoForm(request.POST)
         if form.is_valid():
@@ -45,6 +53,7 @@ def equipo(request):
         context={
             "titulo_pagina":titulo_pagina,
             "equipos": equipos,
-            "form": form
+            "form": form,
+            "puntos":puntos
         }
     return render(request, "personal/equipo.html",context)

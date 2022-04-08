@@ -31,15 +31,19 @@
                     <thead class="bg-info">
                         <tr class="text-white">
                             <th scope="col">Nombre</th>
+                            <th scope="col">Puntos</th>
+
 
                         </tr>
                     </thead>
                     <tbody>
-                        {% for equipo in equipos %}
+                       
+                        {% for punto in puntos %}
                         <tr>
-
-                            <td>{{equipo.nombre}} </td>
-
+                            {% for key,value  in punto.items %}
+                                <td>{{value}}</td>
+                            {% endfor %}
+                            
                         </tr>
                         {% endfor%}
                     </tbody>
