@@ -1,0 +1,36 @@
+{% extends 'partials/base.html' %}
+{% block title %} Perfil {% endblock %}
+{% block contenido %} 
+<div class="row my-4">
+    <div class="col-md-4"></div>
+    <div>
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                Datos de Usuario
+            </div>
+            <div class="row p-3">
+                <div class="col-md-8">
+                    <table class="table table-borderless">
+                        <thead>
+                            <span class="h4">Información Personal</span class="h4">
+                            <hr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Name</th>
+                                <td>{{ user.username }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Email</th>
+                                <td>{{ user.email }}</td>
+                            </tr>
+                          
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

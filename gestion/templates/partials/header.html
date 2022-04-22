@@ -1,7 +1,7 @@
 {% load static %}
 <div class="container-fluid">
     <div class="row flex-nowrap">
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+        <div class="aside-menu col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
             <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                 <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                     <span class="fs-5 d-none d-sm-inline">Menú</span>
@@ -40,12 +40,18 @@
                         <span class="d-none d-sm-inline mx-1">Admin</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                        
+                        {% if user.is_authenticated %}
                         <li><a class="dropdown-item" href="#">Perfil</a></li>
                         <li><a class="dropdown-item" href="#">Configuraciones</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+                        <li><a class="dropdown-item" href="{% url 'usuario-logout' %}">Cerrar Sesión</a></li>
+                        {% else %}
+                        <li><a class="dropdown-item" href="{% url 'usuario-login' %}">Iniciar Sesión</a></li>
+                        {% endif %}
+                        
                     </ul>
                 </div>
             </div>
