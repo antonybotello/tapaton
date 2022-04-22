@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#proyectos').DataTable({
+    $('#tabla').DataTable({
        
         "language": {
             "lengthMenu": "Mostrar _MENU_ registros por página",

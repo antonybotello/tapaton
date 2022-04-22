@@ -22,8 +22,8 @@ class Aprendiz(models.Model):
     def __str__(self) -> str:
         return '%s %s'%(self.nombre, self.apellido)
     def clean(self):
-        self.nombre= self.nombre.capitalize()
-        self.apellido= self.nombre.capitalize()
+        self.nombre= self.nombre.title()
+        self.apellido= self.apellido.title()
        
         
         

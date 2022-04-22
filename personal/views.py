@@ -1,3 +1,7 @@
+from collections import defaultdict
+from email.policy import default
+from tokenize import group
+from typing import Counter
 from django.shortcuts import render, redirect
 from contabilidad.models import Tapa
 from personal.forms import AprendizForm, EquipoForm
@@ -33,9 +37,21 @@ def equipo(request):
     for i in range(len(puntos) ):
         puntos[i]["aprendiz"]=Aprendiz.objects.get(id=puntos[i]["aprendiz"]).equipo
         puntos[i]["puntos"]=puntos[i]["puntos"]//15
+    groups= defaultdict(list)
     
-    print( puntos)
-  
+    for j in puntos:
+        groups[j['aprendiz']].append(j)
+
+    new_list= groups.values()
+    finale=list()
+    for k in new_list:
+        aux={'equipo':0,'puntaje':0}
+        for l in k:
+           aux={'equipo':l['aprendiz'],'puntaje':l['puntos']+aux['puntaje']}
+           
+        finale.append(aux)
+    print(finale)   
+    
     if request.method == 'POST':
         form= EquipoForm(request.POST)
         if form.is_valid():
@@ -54,6 +70,7 @@ def equipo(request):
             "titulo_pagina":titulo_pagina,
             "equipos": equipos,
             "form": form,
-            "puntos":puntos
+            "puntos":finale
         }
     return render(request, "personal/equipo.html",context)
+

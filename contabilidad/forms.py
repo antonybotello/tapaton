@@ -1,6 +1,6 @@
 from django import forms
 
-from contabilidad.models import DetalleFondo, Fondo, Tapa
+from contabilidad.models import DetalleFondo, Tapa
 
 class TapaForm(forms.ModelForm):
     class Meta:

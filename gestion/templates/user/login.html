@@ -1,19 +1,12 @@
 {% extends 'partials/body.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 {% block contenido %}
-<div class="row my-4">
-    <div class="col-md-6 offset-md-3">
-        <div class="border p-3 bg-white">
-            <h4>Login Page</h4>
-            <hr>
-            <form method="POST">
-                {% csrf_token %}
-                {{ form|crispy }}
-                <input class="btn btn-success" type="submit" value="Login">
-            </form>
-        </div>
-    </div>
-</div>
 
+<h1>Inicio</h1>
+<div class="container-fluid">
+    <img class="center" src="{% static 'img/fondo-index.jpg' %}" alt="">
+</div>
+{% include "modals/modal-login.html" %}
 
 {% endblock %}
