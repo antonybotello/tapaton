@@ -1,18 +1,16 @@
 from collections import defaultdict
 from email.policy import default
-from tokenize import group
-from typing import Counter
 from django.shortcuts import render, redirect
 from contabilidad.models import Tapa
-from personal.forms import AprendizForm, EquipoForm
+from personal.forms import AprendizForm, AprendizUpdateForm, EquipoForm
 from personal.models import Aprendiz, Equipo
 from django.db.models import Sum
 from django.contrib import messages
 
-def aprendiz(request):
+def aprendiz(request,pk=0):
     titulo_pagina="Aprendices"
     aprendices= Aprendiz.objects.all()
-    #items= Aprendiz.objects.raw('SELECT * FROM personal_aprendiz')
+
     if request.method == 'POST':
         form= AprendizForm(request.POST)
         if form.is_valid():
@@ -27,7 +25,31 @@ def aprendiz(request):
         "aprendices": aprendices,
         "form":form
     }
+    
     return render(request, "personal/aprendiz.html",context)
+  
+
+def aprendiz_update(request, pk):
+    titulo_pagina="Aprendices"
+    aprendices= Aprendiz.objects.all()
+
+    aprendices_unique= Aprendiz.objects.get(id=pk)
+    #items= Aprendiz.objects.raw('SELECT * FROM personal_aprendiz')
+    if request.method == 'POST':
+        form= AprendizUpdateForm(request.POST, instance=aprendices_unique)
+        if form.is_valid():
+            form.save()
+            aprendiz_nombre= form.cleaned_data.get('nombre')
+            messages.success(request,f'El aprendiz {aprendiz_nombre} se agregó correctamente!')
+            return redirect('personal-aprendiz')
+    else:
+        form= AprendizUpdateForm(instance=aprendices_unique)
+    context={
+        "titulo_pagina": titulo_pagina,
+        "aprendices": aprendices,
+        "form":form
+    }
+    return render(request, "personal/aprendiz-update.html",context)
 
 def equipo(request):
     titulo_pagina="Equipos"

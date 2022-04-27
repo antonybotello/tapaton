@@ -4,16 +4,22 @@ from django.utils.translation import gettext_lazy as _
 class Equipo(models.Model):
     nombre=models.CharField(max_length=50, blank=False, unique=True, verbose_name="Nombre")
     puntos=models.PositiveIntegerField(default=0)
+    
     def __str__(self) -> str:
         return '%s'%(self.nombre)
     def clean(self):
         self.nombre= self.nombre.capitalize()
+    
         
 
 class Aprendiz(models.Model):
     nombre=models.CharField(max_length=50, verbose_name="Nombre")
     apellido=models.CharField(max_length=50, verbose_name="Apellido")
     documento=models.CharField(unique=True, max_length=10)
+    class Activo(models.TextChoices):
+        ACTIVO='1', _('Activo')
+        INACTIVO='0', _('Inactivo')
+    activo= models.CharField(max_length=1, choices=Activo.choices, default=Activo.ACTIVO, verbose_name="Activo")
     class Sexo(models.TextChoices):
         MASCULINO='M', _('Masculino')
         FEMENINO='F', _('Femenino')
@@ -23,7 +29,7 @@ class Aprendiz(models.Model):
         return '%s %s'%(self.nombre, self.apellido)
     def clean(self):
         self.nombre= self.nombre.title()
-        self.apellido= self.apellido.title()
+        self.apellido= self.apellido.title() 
        
         
         

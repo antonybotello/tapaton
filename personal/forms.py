@@ -7,6 +7,11 @@ class AprendizForm(forms.ModelForm):
         model= Aprendiz
         fields= ['nombre','apellido','documento','sexo','equipo']
         #fields= '__all__'
+class AprendizUpdateForm(forms.ModelForm):
+    class Meta:
+        model= Aprendiz
+        fields= ['nombre','apellido','sexo','equipo']
+        #fields= '__all__'
     
 class EquipoForm(forms.ModelForm):
     class Meta:

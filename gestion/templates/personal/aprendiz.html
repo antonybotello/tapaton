@@ -30,7 +30,7 @@
                     placeholder="Que estas buscando?">
                 <span class="counter pull-right col-md-4 ubiq"></span>
             </div>
-            <form id="form1">
+            
 
                 <table class="table bg-white table-bordered results" id="tabla">
                     <thead class="bg-info">
@@ -40,6 +40,7 @@
                             <th scope="col">Documento</th>
                             <th scope="col">Sexo</th>
                             <th scope="col">Equipo</th>
+                            <th scope="col">Opciones</th
                         </tr>
                     </thead>
                     <tbody>
@@ -50,12 +51,16 @@
                             <td>{{aprendiz.documento}} </td>
                             <td>{{aprendiz.sexo}} </td>
                             <td>{{aprendiz.equipo}} </td>
+                            <td>
+                                <a class="btn btn-primary btn-sm"
+                                 href="{% url 'personal-aprendiz-update' aprendiz.id %}">Editar</a></td>
                         </tr>
                         {% endfor%}
                     </tbody>
                 </table>
-            </form>
+          
         </div>
     </div>
 </div>
+
 {% endblock contenido %}
