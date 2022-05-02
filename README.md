@@ -2,12 +2,12 @@
 Creando el proyecto
 #####################################
 
-python -m venv adsi-venv
-activate
-pip install django
-django-admin startproject NOMBRE .
-python manage.py migrate
-python manage.py runserver
+        python -m venv adsi-venv
+        activate
+        pip install django
+        django-admin startproject NOMBRE .
+        python manage.py migrate
+        python manage.py runserver
 
 
 settings el template tenga la direccion de la carpeta de plantillas
