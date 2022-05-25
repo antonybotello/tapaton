@@ -6,7 +6,10 @@ from personal.forms import AprendizForm, AprendizUpdateForm, EquipoForm
 from personal.models import Aprendiz, Equipo
 from django.db.models import Sum
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from gestion.decorators import unauthenticated_user, allowed_users
 
+@login_required(login_url="usuario-login")
 def aprendiz(request,pk=0):
     titulo_pagina="Aprendices"
     aprendices= Aprendiz.objects.all()
@@ -28,7 +31,7 @@ def aprendiz(request,pk=0):
     
     return render(request, "personal/aprendiz.html",context)
   
-
+@login_required(login_url="usuario-login")
 def aprendiz_update(request, pk):
     titulo_pagina="Aprendices"
     aprendices= Aprendiz.objects.all()
@@ -50,7 +53,32 @@ def aprendiz_update(request, pk):
         "form":form
     }
     return render(request, "personal/aprendiz-update.html",context)
-
+@login_required(login_url="usuario-login")
+@allowed_users(allowed_roles=["Gerente"])
+def aprendiz_delete(request, pk):
+    titulo_pagina="Aprendices"
+    url_back= '/personal/aprendiz/'
+    aprendices= Aprendiz.objects.all()
+    aprendiz= Aprendiz.objects.get(id=pk)
+    accion_txt= f"Usuario {aprendiz.documento}, una vez eliminado no hay marcha atras!"
+    if request.method == 'POST':
+        form= AprendizForm(request.POST)
+        Aprendiz.objects.filter(id=pk).update(
+                    estado='0'
+                )
+        aprendiz_nombre= aprendiz.nombre
+        messages.success(request,f'El usuario {aprendiz_nombre} se eliminó correctamente!')
+        return redirect('personal-aprendiz')
+    else:
+        form= AprendizForm()
+    context={
+        "titulo_pagina": titulo_pagina,
+        "accion_txt":accion_txt,
+        "aprendices": aprendices,
+        "form":form,
+        "url_back":url_back
+    }
+    return render(request, "personal/aprendiz-delete.html",context)
 def equipo(request):
     titulo_pagina="Equipos"
     equipos= Equipo.objects.all()

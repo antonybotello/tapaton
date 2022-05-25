@@ -12,6 +12,13 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 
+import mimetypes
+import os
+ROOT_PATH = os.path.dirname(__file__)
+mimetypes.add_type("text/css", ".css",True)
+mimetypes.add_type("text/javascript", ".js",True)
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,6 +31,7 @@ SECRET_KEY = 'django-insecure-wq0c9ln+$v#237mlr5a@w1gc$u1h9x_ox04#dg$0_aittg2@_p
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
 
 ALLOWED_HOSTS = ['*']
 
@@ -39,8 +47,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'personal',
     'contabilidad',
-    'crispy_forms',
-    'crispy_bootstrap5',
+    'crispy_forms',         # pip install django-crispy-forms
+    'crispy_bootstrap5',    # pip install django-bootstrap5
+                            # pip install crispy_bootstrap5
+                            # pip install pymysql
+                            # pip install mysqlclient
     
 ]
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -126,9 +137,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = "/Users/Antony/Documents/Ficha 2274766/Proyectos/static"
 STATICFILES_DIRS = [
-    BASE_DIR / 'gestion\static'
+    os.path.join(BASE_DIR, 'gestion/static/'),
 ]
 
 # Default primary key field type

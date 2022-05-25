@@ -1,0 +1,20 @@
+{% extends 'partials/body.html' %}
+{% block contenido %}
+
+<form action="" method="POST">
+    {% csrf_token %}
+    {% for modelo  in modelos %}
+    
+      <input type="checkbox" name="modelos_lista" value="{{modelo.verbose_name}}" id="">
+      <label for="modelos_lista">{{modelo.verbose_name}}</label>
+      
+    {% endfor %}
+    <input type="submit" value="Enviar">
+</form>
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="archivo" id="">
+    <input type="submit" value="Enviar">
+</form>
+
+{% endblock contenido %}

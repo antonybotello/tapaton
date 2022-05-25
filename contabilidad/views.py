@@ -2,9 +2,12 @@ from datetime import datetime
 from django.shortcuts import render, redirect
 from contabilidad.forms import DetalleFondoForm, TapaForm
 from contabilidad.models import DetalleFondo, Fondo, Tapa
-
+from django.contrib.auth.decorators import login_required
+from gestion.decorators import unauthenticated_user, allowed_users
 from django.contrib import messages
 
+
+@login_required(login_url="usuario-login")
 
 def tapa(request):
     titulo_pagina = "Tapas"
@@ -28,7 +31,7 @@ def tapa(request):
     }
     return render(request, "contabilidad/tapa.html", context)
 
-
+@login_required(login_url="usuario-login")
 def fondo(request):
     titulo_pagina = "Fondos"
     fondos_detalle = DetalleFondo.objects.all()
@@ -54,7 +57,7 @@ def fondo(request):
     }
     return render(request, "contabilidad/fondo.html", context)
 
-
+@login_required(login_url="usuario-login")
 def detalle_fondo(request, pk):
     titulo_pagina = f"Nueva Contribución"
     fondos_detalle = DetalleFondo.objects.all()
@@ -87,6 +90,7 @@ def detalle_fondo(request, pk):
     }
     return render(request, "contabilidad/detalle-fondo.html", context)
 
+@login_required(login_url="usuario-login")
 
 def detalle_fondo_delete(request, pk):
     titulo_pagina = f"Fondos"

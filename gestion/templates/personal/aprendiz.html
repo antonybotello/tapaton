@@ -25,11 +25,7 @@
         </div>
 
         <div class="col-md-8">
-            <div class="form-group pull-right col-md-4">
-                <input type="text" class="search form-control"
-                    placeholder="Que estas buscando?">
-                <span class="counter pull-right col-md-4 ubiq"></span>
-            </div>
+            
             
 
                 <table class="table bg-white table-bordered results" id="tabla">
@@ -40,11 +36,12 @@
                             <th scope="col">Documento</th>
                             <th scope="col">Sexo</th>
                             <th scope="col">Equipo</th>
-                            <th scope="col">Opciones</th
+                            <th scope="col">Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for aprendiz in aprendices %}
+                        {% if aprendiz.estado == '1' %}
                         <tr>
                             <td>{{aprendiz.nombre}} </td>
                             <td>{{aprendiz.apellido}} </td>
@@ -53,8 +50,11 @@
                             <td>{{aprendiz.equipo}} </td>
                             <td>
                                 <a class="btn btn-primary btn-sm"
-                                 href="{% url 'personal-aprendiz-update' aprendiz.id %}">Editar</a></td>
+                                 href="{% url 'personal-aprendiz-update' aprendiz.id %}">Editar</a>
+                                 <a class="btn btn-danger btn-sm"
+                                 href="{% url 'personal-aprendiz-delete' aprendiz.id %}">Eliminar</a></td>
                         </tr>
+                        {% endif %}
                         {% endfor%}
                     </tbody>
                 </table>

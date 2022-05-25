@@ -34,22 +34,14 @@
                     </li>
                 </ul>
                 <hr>
-                <div class="dropdown pb-4">
-                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{% static 'img/user.png' %}" alt="imagen de usuario" width="30" height="30" class="rounded-circle">
-                        <span class="d-none d-sm-inline mx-1">Admin</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                <div class="pb-4">
+                    
                         
                         {% if user.is_authenticated %}
-                        <li><a class="dropdown-item" href="#">Perfil</a></li>
-                        <li><a class="dropdown-item" href="#">Configuraciones</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="{% url 'usuario-logout' %}">Cerrar Sesión</a></li>
+                   
+                        <a class="" href="{% url 'usuario-logout' %}">Cerrar Sesión</a>
                         {% else %}
-                        <li><a class="dropdown-item" href="{% url 'usuario-login' %}">Iniciar Sesión</a></li>
+                        <a class="" href="{% url 'usuario-login' %}">Iniciar Sesión</a>
                         {% endif %}
                         
                     </ul>
@@ -57,5 +49,3 @@
             </div>
         </div>
         <div class="col py-3">
-            
-   
