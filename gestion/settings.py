@@ -12,11 +12,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 
-import mimetypes
 import os
 ROOT_PATH = os.path.dirname(__file__)
-mimetypes.add_type("text/css", ".css",True)
-mimetypes.add_type("text/javascript", ".js",True)
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -45,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'gestion',
     'personal',
     'contabilidad',
     'crispy_forms',         # pip install django-crispy-forms
@@ -52,7 +50,8 @@ INSTALLED_APPS = [
                             # pip install crispy_bootstrap5
                             # pip install pymysql
                             # pip install mysqlclient
-    
+                            # pip install waitress
+                           
 ]
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
@@ -138,10 +137,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = "/Users/Antony/Documents/Ficha 2274766/Proyectos/static"
+
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'gestion/static/'),
+    os.path.join(BASE_DIR, 'static'),
 ]
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

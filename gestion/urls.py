@@ -17,18 +17,20 @@ Including another URLconf
 from django.urls import include, path
 from django.contrib import admin
 from gestion.views import backup, inicio
-
+from django.conf.urls.static import static
+from django.conf import settings
 from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', inicio , name="inicio"),
     path('personal/', include('personal.urls')),
     path('contabilidad/', include('contabilidad.urls')),
-    path('backup/', backup),
+    path('backup/<str:tipo>/', backup , name="backup"),
     
      # Logueo
     path('login/', auth_views.LoginView.as_view(template_name='user/login.html'), name='usuario-login'),
     path('logout/', auth_views.LogoutView.as_view(), name='usuario-logout'),
-    
-    
-]
+
+]+ static(
+    settings.MEDIA_URL, 
+    document_root = settings.MEDIA_ROOT)

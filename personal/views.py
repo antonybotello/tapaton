@@ -35,7 +35,7 @@ def aprendiz(request,pk=0):
 def aprendiz_update(request, pk):
     titulo_pagina="Aprendices"
     aprendices= Aprendiz.objects.all()
-
+    url_back= '/personal/aprendiz/'
     aprendices_unique= Aprendiz.objects.get(id=pk)
     #items= Aprendiz.objects.raw('SELECT * FROM personal_aprendiz')
     if request.method == 'POST':
@@ -50,7 +50,8 @@ def aprendiz_update(request, pk):
     context={
         "titulo_pagina": titulo_pagina,
         "aprendices": aprendices,
-        "form":form
+        "form":form,
+        "url_back":url_back
     }
     return render(request, "personal/aprendiz-update.html",context)
 @login_required(login_url="usuario-login")
@@ -79,6 +80,7 @@ def aprendiz_delete(request, pk):
         "url_back":url_back
     }
     return render(request, "personal/aprendiz-delete.html",context)
+
 def equipo(request):
     titulo_pagina="Equipos"
     equipos= Equipo.objects.all()

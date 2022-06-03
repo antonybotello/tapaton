@@ -2,10 +2,12 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from personal.models import Aprendiz, Equipo
 from django.core.validators import MinValueValidator
+
 class Tapa(models.Model):
     fecha= models.DateField(auto_now=True, verbose_name="Fecha de Registro", help_text=u"MM/DD/AAAA")
     cantidad= models.PositiveIntegerField(validators=[MinValueValidator(1)])
     aprendiz=models.ForeignKey(Aprendiz,on_delete=models.SET_NULL, null=True,verbose_name=u"Aprendiz")
+    
     class Meta:
         verbose_name =  'Tapa'
         verbose_name_plural = 'contabilidad.Tapa'

@@ -1,6 +1,6 @@
 from datetime import datetime
 from django.shortcuts import render, redirect
-from contabilidad.forms import DetalleFondoForm, TapaForm
+from contabilidad.forms import DetalleFondoForm, TapaForm, TapaUpdateForm
 from contabilidad.models import DetalleFondo, Fondo, Tapa
 from django.contrib.auth.decorators import login_required
 from gestion.decorators import unauthenticated_user, allowed_users
@@ -8,7 +8,7 @@ from django.contrib import messages
 
 
 @login_required(login_url="usuario-login")
-
+@allowed_users(allowed_roles=["Gerente"])
 def tapa(request):
     titulo_pagina = "Tapas"
     tapas = Tapa.objects.all()
@@ -30,6 +30,57 @@ def tapa(request):
         "form": form
     }
     return render(request, "contabilidad/tapa.html", context)
+
+@login_required(login_url="usuario-login")
+def tapa_update(request, pk):
+    titulo_pagina = "Tapas"
+    url_back= '/contabilidad/tapa/'
+    tapas = Tapa.objects.all()
+    tapas_unique= Tapa.objects.get(id=pk)
+    #items= Aprendiz.objects.raw('SELECT * FROM personal_aprendiz')
+    if request.method == 'POST':
+        form= TapaUpdateForm(request.POST, instance=tapas_unique)
+        if form.is_valid():
+            form.save()
+            aprendiz_nombre= tapas_unique.aprendiz.nombre
+            messages.success(request,f'las tapas de {aprendiz_nombre} se modificaron correctamente!')
+            return redirect('contabilidad-tapa')
+    else:
+        form= TapaUpdateForm(instance=tapas_unique)
+    context={
+        "titulo_pagina": titulo_pagina,
+        "tapas": tapas,
+        "form":form,
+        "url_back":url_back
+    }
+    return render(request, "contabilidad/tapa-update.html",context)
+@login_required(login_url="usuario-login")
+@allowed_users(allowed_roles=["Gerente"])
+def tapa_delete(request, pk):
+    titulo_pagina = "Tapas"
+    tapas = Tapa.objects.all()
+    url_back= '/contabilidad/tapa/'
+    tapa= Tapa.objects.get(id=pk)
+    accion_txt= f"La contribución de {tapa.aprendiz.nombre} se eliminará"
+    if request.method == 'POST':
+        form= TapaForm(request.POST)
+        Tapa.objects.filter(id=pk).update(
+                    estado='0'
+                )
+        aprendiz_nombre= tapa.aprendiz.nombre
+        messages.success(request,f'la contribución de {aprendiz_nombre} se eliminó correctamente!')
+        return redirect('contabilidad-tapa')
+    else:
+        form= TapaForm()
+    context={
+        "titulo_pagina": titulo_pagina,
+        "accion_txt":accion_txt,
+        "tapas": tapas,
+        "form":form,
+        "url_back":url_back
+    }
+    return render(request, "contabilidad/tapa-delete.html",context)
+
 
 @login_required(login_url="usuario-login")
 def fondo(request):

@@ -20,10 +20,10 @@ class Aprendiz(models.Model):
     nombre=models.CharField(max_length=50, verbose_name="Nombre")
     apellido=models.CharField(max_length=50, verbose_name="Apellido")
     documento=models.CharField(unique=True, max_length=10)
-    class Activo(models.TextChoices):
+    class Estado(models.TextChoices):
         ACTIVO='1', _('Activo')
         INACTIVO='0', _('Inactivo')
-    estado= models.CharField(max_length=1, choices=Activo.choices, default=Activo.ACTIVO, verbose_name="Activo")
+    estado= models.CharField(max_length=1, choices=Estado.choices, default=Estado.ACTIVO, verbose_name="Activo")
     class Sexo(models.TextChoices):
         MASCULINO='M', _('Masculino')
         FEMENINO='F', _('Femenino')

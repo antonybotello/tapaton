@@ -25,14 +25,13 @@
                     placeholder="Que estas buscando?">
                 <span class="counter pull-right col-md-4 ubiq"></span>
             </div>
-            <form id="form1">
-
-                <table class="table bg-white table-bordered results "id="tabla">
+           
+                <table class="table bg-white table-bordered results " id="tabla">
                     <thead class="bg-info">
                         <tr class="text-white">
                             <th scope="col">Nombre</th>
                             <th scope="col">Puntos</th>
-
+                            <th scope="col">Opciones</th>
 
                         </tr>
                     </thead>
@@ -42,13 +41,19 @@
                         <tr>
                             {% for key,value  in punto.items %}
                                 <td>{{value}}</td>
+                                
                             {% endfor %}
-                            
+                            <td>
+                                <a class="btn btn-primary btn-sm"
+                                 href="">Editar</a>
+                                 <a class="btn btn-danger btn-sm"
+                                 href="}">Eliminar</a>
+                            </td>
                         </tr>
                         {% endfor%}
                     </tbody>
                 </table>
-            </form>
+        
         </div>
     </div>
 </div>

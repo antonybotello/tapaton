@@ -6,9 +6,9 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Editar Aprendiz</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Editar {{titulo_pagina}}</h5>
                 <a class="btn-close"
-                data-bs-dismiss="modal" href="{% url 'personal-aprendiz' %}" aria-label="Close"></a>
+                data-bs-dismiss="modal" href="{{url_back}}" aria-label="Close"></a>
             </div>
             <div class="modal-body">
                 <form action="" method="POST">
@@ -19,7 +19,7 @@
             <div class="modal-footer">
                 
                 <a class="btn btn-secondary"
-                    data-bs-dismiss="modal" href="{% url 'personal-aprendiz' %}">Cancelar</a>
+                    data-bs-dismiss="modal" href="{{url_back}}">Cancelar</a>
                 <input type="submit" class="btn btn-success" value="Editar"></button>
                 </form>
             </div>

@@ -1,5 +1,7 @@
 from django import forms
+from gestion.models import Backup
 
-class UploadFileForm(forms.Form):
-    title = forms.CharField(max_length=50)
-    file = forms.FileField()
+class BackupForm(forms.Form):
+    class Meta:
+        model= Backup
+        fields= ['nombre','archivo','fecha']
