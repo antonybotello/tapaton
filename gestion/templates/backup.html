@@ -26,13 +26,7 @@
         <div class="col">
             <h2>Restaurar</h2>
             <form action="{% url 'backup' tipo='U' %}" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="mb-3">
-                    <label for="archivo" class="form-label">Copias a restaurar</label>
-                    <input class="form-control" type="file" id="archivo">
-                    <!-- <input class="form-control" type="file" id="formFileMultiple" multiple> -->
-
-                </div>
+                {% csrf_token %} {{form|crispy}}
                 <input type="submit" value="Enviar">
             </form>
         </div>

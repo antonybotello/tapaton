@@ -16,6 +16,13 @@ def extraer_datos(app_name):
         sys.stdout=open(f"static/backup/{app_name}.json", 'w+')
         management.call_command('dumpdata', app_name)
         sys.stdout = sysout
+
+def rstaurar_datos(app_name):
+    for i in range(2):
+        sysout = sys.stdout
+        sys.stdout=open(f"static/backup/{app_name}.json", 'w+')
+        management.call_command('dumpdata', app_name)
+        sys.stdout = sysout
         
 def subir_datos(app_name,f):
     with open(f"static/backup/{app_name}.json", 'wb+') as destination:
@@ -44,14 +51,18 @@ def backup(request,tipo):
     if request.method == 'POST' and tipo== "U":
         # Fetching the form data
         nombre = "prueba"
-        print(request.FILES)
-        #archivo = request.FILES['archivo']
-        #messages.success(request,f'El archivo se subió correctamente.')
-        # backup = Backup(
-        #     nombre = nombre,
-        #     archivo = archivo
-        # )
-        # document.save()
+        form = BackupForm(request.POST, request.FILES)
+        if form.is_valid():
+  
+            archivo = request.FILES['archivo']
+            
+            insert = Backup(nombre="copia", archivo=archivo)
+            insert.save()
+            
+            return redirect('backup','A')
+        else:
+            print( "Error al procesar el formulario")
+            return redirect('backup','A')
 
         
         return redirect('backup','A')
@@ -68,6 +79,8 @@ def backup(request,tipo):
         
     else:
         form = BackupForm()
+      
+        
     context ={
         "modelos":modelos,
         "form":form,
