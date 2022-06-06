@@ -8,10 +8,10 @@
             <form action="{% url 'backup' tipo='D' %}" method="POST">
                 {% csrf_token %}
                 <div class="mb-3">
-                    <div class="mb-3 form-check">
+                    <!-- <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input" name="modelos_lista" value="Todo" id="">
                         <label class="form-check-label" for="modelos_lista">Todo</label>
-                    </div>
+                    </div> -->
                     {% for modelo in modelos %}
                     <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input" name="modelos_lista" value="{{modelo.verbose_name}}" id="">
