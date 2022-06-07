@@ -1,8 +1,8 @@
-{% extends 'partials/body.html' %} {% block contenido %} {% load crispy_forms_tags %}
+{% extends 'partials/body.html' %} {% block contenido %} {% load crispy_forms_tags %} {% load static %}
 <div class="container ">
     <div class="row">
         <div class="col">
-            <h2>Descargar</h2>
+            <h2>Exportar</h2>
 
 
             <form action="{% url 'backup' tipo='D' %}" method="POST">
@@ -12,26 +12,25 @@
                         <input type="checkbox" class="form-check-input" name="modelos_lista" value="Todo" id="">
                         <label class="form-check-label" for="modelos_lista">Todo</label>
                     </div> -->
-                    {% for modelo in modelos %}
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" name="modelos_lista" value="{{modelo.verbose_name}}" id="">
-                        <label class="form-check-label" for="modelos_lista">{{modelo.verbose_name}}</label>
+                    {% for modelo in ficheros %}
+                    <div class="mb-3 ">
+                        <a href="{% static 'backup' %}/{{modelo}}">{{modelo}}</a>
                     </div>
                     {% endfor %}
                 </div>
-                <input type="submit" value="Enviar">
+                <input type="submit" value="Generar Copia">
             </form>
         </div>
 
         <div class="col">
-            <h2>Restaurar</h2>
+            <h2>Importar</h2>
             <form action="{% url 'backup' tipo='U' %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %} {{form|crispy}}
                 <input type="submit" value="Enviar">
             </form>
         </div>
         <div class="col">
-            <h2>Listado de Archivos</h2>
+            <h2>Historial de Importes</h2>
             <table class="table" id="tabla">
                 <thead class="bg-info">
                     <tr class="text-white">
