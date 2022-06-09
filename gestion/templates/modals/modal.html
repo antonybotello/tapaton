@@ -1,0 +1,30 @@
+<!-- Modal -->
+<div class="modal fade"
+     id="mainModal"
+     tabindex="-1"
+     aria-labelledby="mainModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mainModalLabel">{{ modal_title.title }}</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Esta seguro de {{ modal_txt }} {{ titulo_pagina }}?</p>
+            </div>
+            <div class="modal-footer">
+                <form method="POST">
+                    {% csrf_token %}
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <input type="submit" class="btn btn-danger" value="{{ modal_submit }}">
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->

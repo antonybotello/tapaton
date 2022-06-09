@@ -25,10 +25,14 @@ def importar_datos(archivo):
 def inicio(request):
 
     titulo_pagina="Inicio"
+    subtitulo_pagina="Datos de Interes"
+    
    
     context={
        
-        'titulo_pagina':titulo_pagina
+        'titulo_pagina':titulo_pagina,
+        'subtitulo_pagina':subtitulo_pagina
+        
     }
     return render(request,'index.html',context)
 

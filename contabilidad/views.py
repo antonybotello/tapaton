@@ -9,10 +9,15 @@ from django.contrib import messages
 
 @login_required(login_url="usuario-login")
 @allowed_users(allowed_roles=["Gerente"])
-def tapa(request):
+def tapa(request, tipo, pk):
     titulo_pagina = "Tapas"
+    subtitulo_pagina = "Gestion de Tapas"
+    modal_title="eliminar tapas"
+    modal_text=""
+    
     tapas = Tapa.objects.all()
-    if request.method == 'POST':
+    tapa_delete(pk,tipo)
+    if request.method == 'POST' and tipo=="C":
         form = TapaForm(request.POST)
         if datetime.today().weekday() == 4:
             if form.is_valid():
@@ -22,10 +27,15 @@ def tapa(request):
         else:
             messages.warning(
                 request, f'Hoy no es día de agregar fondos!!!')
+    
+        
     else:
         form = TapaForm()
     context = {
         "titulo_pagina": titulo_pagina,
+        "subtitulo_pagina": subtitulo_pagina,
+        "modal_title":modal_title,
+        "modal_text":modal_text,        
         "tapas": tapas,
         "form": form
     }
@@ -54,15 +64,14 @@ def tapa_update(request, pk):
         "url_back":url_back
     }
     return render(request, "contabilidad/tapa-update.html",context)
-@login_required(login_url="usuario-login")
-@allowed_users(allowed_roles=["Gerente"])
-def tapa_delete(request, pk):
+
+def tapa_delete(pk,tipo):
     titulo_pagina = "Tapas"
     tapas = Tapa.objects.all()
     url_back= '/contabilidad/tapa/'
     tapa= Tapa.objects.get(id=pk)
     accion_txt= f"La contribución de {tapa.aprendiz.nombre} se eliminará"
-    if request.method == 'POST':
+    if request.method == 'POST' and tipo=="D":
         form= TapaForm(request.POST)
         Tapa.objects.filter(id=pk).update(
                     estado='0'
@@ -70,16 +79,7 @@ def tapa_delete(request, pk):
         aprendiz_nombre= tapa.aprendiz.nombre
         messages.success(request,f'la contribución de {aprendiz_nombre} se eliminó correctamente!')
         return redirect('contabilidad-tapa')
-    else:
-        form= TapaForm()
-    context={
-        "titulo_pagina": titulo_pagina,
-        "accion_txt":accion_txt,
-        "tapas": tapas,
-        "form":form,
-        "url_back":url_back
-    }
-    return render(request, "contabilidad/tapa-delete.html",context)
+    
 
 
 @login_required(login_url="usuario-login")

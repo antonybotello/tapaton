@@ -5,7 +5,7 @@ from contabilidad.views import detalle_fondo, detalle_fondo_delete, fondo, tapa,
 
 
 urlpatterns = [
-    path('tapa/', tapa, name='contabilidad-tapa'),
+    path('tapa/<str:tipo>/<int:pk>/', tapa, name='contabilidad-tapa'),
     path('tapa/update/<int:pk>/', tapa_update, name='contabilidad-tapa-update'),
     path('tapa/delete/<int:pk>/', tapa_delete, name='contabilidad-tapa-delete'),
     path('fondo/', fondo, name='contabilidad-fondo'),

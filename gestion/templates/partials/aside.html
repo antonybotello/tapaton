@@ -1,0 +1,43 @@
+<div id="layoutSidenav_nav">
+    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+        <div class="sb-sidenav-menu">
+            <div class="nav">
+                <div class="sb-sidenav-menu-heading">Core</div>
+                <a class="nav-link" href="{% url 'inicio' %}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    Inicio
+                </a>
+                <a class="nav-link" href="{% url 'backup' tipo="R" %}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    Backup
+                </a>
+                <div class="sb-sidenav-menu-heading">Personal</div>
+                <a class="nav-link collapsed" href="{% url 'personal-aprendiz'%}" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                    Aprendices
+                    
+                </a>
+        
+                <a class="nav-link collapsed" href="{% url 'personal-equipo' %}" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                    Equipos
+
+                </a>
+               
+                <div class="sb-sidenav-menu-heading">Tapas</div>
+                <a class="nav-link" href="{% url 'contabilidad-tapa' tipo='R' pk=0 %}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                    Tapas
+                </a>
+                <a class="nav-link" href="{% url 'contabilidad-fondo' %}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                    Fondos
+                </a>
+            </div>
+        </div>
+        <div class="sb-sidenav-footer">
+            <div class="small">Logged in as:</div>
+            Start Bootstrap
+        </div>
+    </nav>
+</div>
