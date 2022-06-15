@@ -9,7 +9,10 @@ from django.http import FileResponse
 import os
 import zipfile
 from datetime import date
-
+from contabilidad.models import Tapa
+from django.db.models import Max, Sum
+from django.db import models
+from personal.models import Aprendiz
 def exportar_datos():
     fecha=date.today()
     os.system(f"mysqldump --add-drop-table --column-statistics=0 -u root bd_tapaton> static/backup/BKP_{fecha}.sql")
@@ -26,12 +29,21 @@ def inicio(request):
 
     titulo_pagina="Inicio"
     subtitulo_pagina="Datos de Interes"
+    tapas=Tapa.objects.all()
+    maximo=tapas.order_by('-cantidad')[0]
+    minimo=tapas.order_by('cantidad')[0]
+    tapas_stats=tapas.values('aprendiz').annotate(total_tapas=Sum(('cantidad'),  output_field=models.IntegerField())).order_by('total_tapas')
+    for i in tapas_stats:
+        i['aprendiz']=Aprendiz.objects.get(id=i['aprendiz'])
+    fecha_stats=tapas.values('fecha').annotate(total_tapas=Sum(('cantidad'),  output_field=models.IntegerField()))
     
-   
     context={
-       
+        'tapas_stats':tapas_stats,
+        'maximo':maximo,
+        'minimo':minimo,
         'titulo_pagina':titulo_pagina,
-        'subtitulo_pagina':subtitulo_pagina
+        'subtitulo_pagina':subtitulo_pagina,
+        'fecha_stats': fecha_stats
         
     }
     return render(request,'index.html',context)

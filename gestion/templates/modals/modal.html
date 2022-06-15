@@ -14,13 +14,16 @@
                         aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>¿Esta seguro de {{ modal_txt }} {{ titulo_pagina }}?</p>
+                <p>¿Esta seguro de {{ modal_txt }}?</p>
             </div>
             <div class="modal-footer">
                 <form method="POST">
                     {% csrf_token %}
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <input type="submit" class="btn btn-danger" value="{{ modal_submit }}">
+                    <input type="hidden" name="tipo" value="{{tipo}}">
+                    <input type="hidden" name="modal-pk" value="{{pk}}">
+
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    <button name="modal-confirmar" class="btn btn-success" >{{ modal_submit }}</button>
                 </button>
             </form>
         </div>

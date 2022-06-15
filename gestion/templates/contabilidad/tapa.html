@@ -1,50 +1,57 @@
 {% extends 'partials/body.html' %}
 {% load crispy_forms_tags %}
 {% block contenido %}
-    <div class="container">
-        <div class="row my-4">
-            <div class="col-md-4">
-                <div class="border bg-white p-3">
-                    <h4>Agregar Tapa</h4>
-                    <hr>
-                    <form action="" method="POST">
-                        {% csrf_token %}
-                        {{ form|crispy }}
-                        <input class="btn btn-success btn-block" type="submit" Value="Agregar Tapa">
-                    </form>
-                </div>
-            </div>
-            <div class="col-md-8">
-                <table class="table bg-white table-bordered results" id="tabla">
-                    <thead class="bg-info">
-                        <tr class="text-white">
-                            <th scope="col">Aprendiz</th>
-                            <th scope="col">Equipo</th>
-                            <th scope="col">Fecha</th>
-                            <th scope="col">Cantidad</th>
-                            <th scope="col">Opciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for tapa in tapas %}
-                            <tr>
-                                <td>{{ tapa.aprendiz }}</td>
-                                <td>{{ tapa.aprendiz.equipo }}</td>
-                                <td>{{ tapa.fecha }}</td>
-                                <td>{{ tapa.cantidad }}</td>
-                                <td>
-                                    <a class="btn btn-primary btn-sm"
-                                       href="{% url 'contabilidad-tapa-update' tapa.id %}">Editar</a>
-                                    <button type="button" class="btn btn-danger btn-sm"
-                                       onclick="location.href='{% url 'contabilidad-tapa' tipo='E' pk=tapa.id %}';"
-                                       data-bs-toggle="modal"
-                                       data-bs-target="#mainModal">Eliminar</button>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+<div class="container">
+    <div class="row my-4">
+        <div class="col-md-4">
+            <div class="border bg-white p-3">
+                <h4>Agregar Tapa</h4>
+                <hr>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <input type="hidden" name="modal-status" id="modal-status" value="{{modal_status}}">
+                    <button class="btn btn-primary btn-sm" name="form-create">Agregar</button>
+                </form>
             </div>
         </div>
+        <div class="col-md-8">
+            <table class="table bg-white table-bordered results" id="tabla">
+                <thead class="bg-info">
+                    <tr class="text-white">
+                        <th scope="col">Aprendiz</th>
+                        <th scope="col">Equipo</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tapa in tapas %}
+                    <tr>
+                        <td>{{ tapa.aprendiz }}</td>
+                        <td>{{ tapa.aprendiz.equipo }}</td>
+                        <td>{{ tapa.fecha }}</td>
+                        <td>{{ tapa.cantidad }}</td>
+                        <td>
+                            <div class="row">
+                                <form action="" method="POST" class="col-4"> {% csrf_token %}
+                                    <input type="hidden" name="pk" value="{{tapa.id}}">
+                                    <button class="btn btn-primary btn-sm" name="form-update"><i
+                                            class="fa-solid fa-pen-to-square"></i></button>
+                                </form>
+                                <form action="" method="POST" class="col-4"> {% csrf_token %}
+                                    <input type="hidden" name="pk" value="{{tapa.id}}">
+                                    <button class="btn btn-danger btn-sm" name="form-delete"><i
+                                            class="fa-solid fa-trash-can"></i></button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
+</div>
 {% endblock contenido %}

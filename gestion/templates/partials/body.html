@@ -13,15 +13,22 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
     <script type="text/javascript" src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+    <script type="application/json" src="{% static 'js/toastr.js.map' %}"></script>
+    <script type="text/javascript" src="{% static 'js/toastr.min.js' %}"></script>
     {% comment %} CSS Datatables {% endcomment %}
     <link rel="stylesheet" type="text/css" href="{% static 'js/datatable/Bootstrap-5-5.1.3/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'js/datatable/DataTables-1.12.1/css/dataTables.bootstrap5.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'js/datatable/Buttons-2.2.3/css/buttons.bootstrap5.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'js/datatable/SearchBuilder-1.3.3/css/searchBuilder.bootstrap5.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'js/datatable/Responsive-2.3.0/css/responsive.bootstrap5.min.css' %}">
+    <link rel="stylesheet" type="text/css"
+        href="{% static 'js/datatable/DataTables-1.12.1/css/dataTables.bootstrap5.min.css' %}">
+    <link rel="stylesheet" type="text/css"
+        href="{% static 'js/datatable/Buttons-2.2.3/css/buttons.bootstrap5.min.css' %}">
+    <link rel="stylesheet" type="text/css"
+        href="{% static 'js/datatable/SearchBuilder-1.3.3/css/searchBuilder.bootstrap5.min.css' %}">
+    <link rel="stylesheet" type="text/css"
+        href="{% static 'js/datatable/Responsive-2.3.0/css/responsive.bootstrap5.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/select2/select2.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/toastr.css' %}">
+    
     <title>Tapaton - {{ titulo_pagina }}</title>
 </head>
 
@@ -30,30 +37,27 @@
     <div id="layoutSidenav">
         {% include "partials/aside.html" %}
         <div id="layoutSidenav_content">
-          <main>
-            <div class="container-fluid px-4">
-                <h1 class="mt-4">{{ titulo_pagina }}</h1>
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item active">{{ subtitulo_pagina }}</li>
-                </ol>
-          {% block contenido %}{% endblock contenido %}
-          {% include "modals/modal.html" %}
-              </main> 
-          
-      </div>
-        
-         {% if messages %} {% for message in messages %}
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">{{ titulo_pagina }}</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active">{{ subtitulo_pagina }}</li>
+                    </ol>
+                   
+                    {% block contenido %}{% endblock contenido %}
+                    {% include "modals/modal.html" %}
+            </main>
+            {% include "partials/footer.html" %} 
+        </div>
+
+        {% if messages %} {% for message in messages %}
         <script type="text/javascript">
-            toastr. {
-                {
-                    message.tags
-                }
-            }("{{ message }}");
+            toastr.{{ message.tags }} ("{{ message }}");
         </script>
-        {% endfor %} {% endif %} {% include "partials/footer.html" %} {% comment %} para los datatables {% endcomment %}
+        {% endfor %} {% endif %} 
     </div>
-    
-    {% block extrajs %} 
+
+    {% block extrajs %}
     {% include "partials/js.html" %}
     {% endblock extrajs %}
 </body>
