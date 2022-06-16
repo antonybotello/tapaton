@@ -5,14 +5,14 @@ Chart.defaults.global.defaultFontColor = '#292b2c';
 // Bar Chart Example
 var ctx = document.getElementById("tapas-grupos");
 var myLineChart = new Chart(ctx, {
-  type: 'doughnut',
+  type: 'polarArea',
   data: {
-    labels: ['Red', 'Orange', 'Yellow', 'Green', 'Blue'],
+    labels:$('#tags-pie').html().slice(0,-1).split(','),
     datasets: [
       {
         label: 'Dataset 1',
-        data: [1,4,6,7,9],
-        backgroundColor: ['red','blue', 'yellow', 'green','purple'],
+        data: $('#data-pie').html().slice(13,-2).split(','),
+        backgroundColor: ["rgba(255,0,0,0.5)",'rgba(0,0,255,0.5)', 'rgba(255,255,0,0.5)', 'rgba(0,255,0,0.5)','rgba(100,0,255,0.5)'],
       }
     ]
   },

@@ -9,7 +9,7 @@ $(document).ready(function(){
     var myLineChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: $('#tags').html().slice(0,-1).split(','),
+            labels: $('#tags-area').html().slice(0,-1).split(','),
             datasets:[{
                 label: "Tapas",
                 lineTension: 0.3,
@@ -22,7 +22,7 @@ $(document).ready(function(){
                 pointHoverBackgroundColor: "255,103,18,1)",
                 pointHitRadius: 50,
                 pointBorderWidth: 2,
-                data: $('#data').html().slice(0,-1).split(',')
+                data: $('#data-area').html().slice(0,-1).split(',')
         }]},
     options: {
     scales: {

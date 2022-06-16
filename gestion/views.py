@@ -31,13 +31,25 @@ def inicio(request):
     subtitulo_pagina="Datos de Interes"
     tapas=Tapa.objects.all()
     maximo=tapas.order_by('-cantidad')[0]
-    minimo=tapas.order_by('cantidad')[0]
+   
+    
     tapas_stats=tapas.values('aprendiz').annotate(total_tapas=Sum(('cantidad'),  output_field=models.IntegerField())).order_by('total_tapas')
+   
     total_tapas=Tapa.objects.aggregate(Sum('cantidad'))['cantidad__sum']
+    
     for i in tapas_stats:
         i['aprendiz']=Aprendiz.objects.get(id=i['aprendiz'])
+    tapas_grupos=tapas_stats.all()
+    tapas_grupos_final={}
+    for j in tapas_grupos:
+        j['aprendiz']=Aprendiz.objects.get(id=j['aprendiz']).equipo   
+        if tapas_grupos_final.get(j['aprendiz']) != None:
+             tapas_grupos_final[j['aprendiz']]+= j['total_tapas']
+        else:
+            tapas_grupos_final[j['aprendiz']]= j['total_tapas']
+                    
     fecha_stats=tapas.values('fecha').annotate(total_tapas=Sum(('cantidad'),  output_field=models.IntegerField()))
-    
+    minimo=tapas.order_by('cantidad')[0]
     context={
         'tapas_stats':tapas_stats,
         'maximo':maximo,
@@ -45,7 +57,8 @@ def inicio(request):
         'titulo_pagina':titulo_pagina,
         'subtitulo_pagina':subtitulo_pagina,
         'fecha_stats': fecha_stats,
-        'total_tapas':total_tapas
+        'total_tapas':total_tapas,
+        'tapas_grupos':tapas_grupos_final
         
     }
     return render(request,'index.html',context)

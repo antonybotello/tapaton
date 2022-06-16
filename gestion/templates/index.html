@@ -4,26 +4,6 @@
 {% block contenido %}
 
 <div class="row">
-    <div class="col-xl-3 col-md-6">
-
-    </div>
-    <div class="col-xl-3 col-md-6">
-
-    </div>
-    <div class="col-xl-3 col-md-6">
-
-    </div>
-    <div class="col-xl-3 col-md-6">
-        <div class="card bg-danger text-white mb-4">
-            <div class="card-body">Danger Card</div>
-            <div class="card-footer d-flex align-items-center justify-content-between">
-                <a class="small text-white stretched-link" href="#">View Details</a>
-                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
 
     <div class="col-xl-6">
         <div class="card mb-4">
@@ -74,14 +54,30 @@
         </div>
     
    
+        
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-6">
         <div class="card bg-warning text-white mb-4">
             <div class="card-body">Warning Card</div>
             <div class="card-footer d-flex align-items-center justify-content-between">
-                <h2>{{minimo.aprendiz.nombre}} con {{minimo.cantidad}} Tapas</h2>
+                <h3>{{minimo.aprendiz.nombre}} con {{minimo.cantidad}} Tapas</h3>
                 <div class="small text-white"><i class="fas fa-angle-right"></i></div>
             </div>
         </div>
     </div>
+    <div class="col-xl-6 ">
+        <div class="card bg-danger text-white mb-4">
+            <div class="card-body">Danger Card</div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <h3>{{minimo.aprendiz.nombre}} con {{minimo.cantidad}} Tapas</h3>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+    
 </div>
 <div class="card mb-4">
     <div class="card-header">
@@ -113,8 +109,13 @@
     </div>
 </div>
 </div>
-<div class="d-none" id="tags">{% for tag in fecha_stats %}{{tag.fecha}},{% endfor %}</div>
-<div class="d-none" id="data">{% for tag in fecha_stats %}{{tag.total_tapas}},{% endfor %}</div>
 
+<!-- Datos chart area-->
+<div class="d-none" id="tags-area">{% for tag in fecha_stats %}{{tag.fecha}},{% endfor %}</div>
+<div class="d-none" id="data-area">{% for tag in fecha_stats %}{{tag.total_tapas}},{% endfor %}</div>
+
+<!-- Datos chart pie-->
+<div class="d-none" id="tags-pie">{% for key in tapas_grupos %}{{key}},{% endfor %}</div>
+<div class="d-none" id="data-pie">{{tapas_grupos.values}}</div>
 
 {% endblock contenido %}
