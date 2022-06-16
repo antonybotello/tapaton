@@ -33,6 +33,7 @@ def inicio(request):
     maximo=tapas.order_by('-cantidad')[0]
     minimo=tapas.order_by('cantidad')[0]
     tapas_stats=tapas.values('aprendiz').annotate(total_tapas=Sum(('cantidad'),  output_field=models.IntegerField())).order_by('total_tapas')
+    total_tapas=Tapa.objects.aggregate(Sum('cantidad'))['cantidad__sum']
     for i in tapas_stats:
         i['aprendiz']=Aprendiz.objects.get(id=i['aprendiz'])
     fecha_stats=tapas.values('fecha').annotate(total_tapas=Sum(('cantidad'),  output_field=models.IntegerField()))
@@ -43,7 +44,8 @@ def inicio(request):
         'minimo':minimo,
         'titulo_pagina':titulo_pagina,
         'subtitulo_pagina':subtitulo_pagina,
-        'fecha_stats': fecha_stats
+        'fecha_stats': fecha_stats,
+        'total_tapas':total_tapas
         
     }
     return render(request,'index.html',context)
