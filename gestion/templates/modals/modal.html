@@ -1,4 +1,6 @@
 <!-- Modal -->
+{% load crispy_forms_tags %}
+
 <div class="modal fade"
      id="mainModal"
      tabindex="-1"
@@ -14,14 +16,16 @@
                         aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <form method="POST">
                 <p>¿Esta seguro de {{ modal_txt }}?</p>
+                {{form_update|crispy}}
             </div>
             <div class="modal-footer">
-                <form method="POST">
+               
                     {% csrf_token %}
                     <input type="hidden" name="tipo" value="{{tipo}}">
                     <input type="hidden" name="modal-pk" value="{{pk}}">
-
+                    
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                     <button name="modal-confirmar" class="btn btn-success" >{{ modal_submit }}</button>
                 </button>

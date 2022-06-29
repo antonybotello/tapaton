@@ -18,6 +18,7 @@ def tapa(request, modal_status="v"):
     form = TapaForm()
     pk_tapa= ""
     tipo=""
+    form_update=None
     if request.method == 'POST' and "form-create" in request.POST:
         form = TapaForm(request.POST)
         if datetime.today().weekday() == 4:
@@ -41,8 +42,16 @@ def tapa(request, modal_status="v"):
 
     if request.method == 'POST' and "form-update" in request.POST:
         modal_status = 't'
-        tipo="editar"
-        print("editando", request.POST['pk'])
+        tapa=Tapa.objects.get(id=request.POST['pk'])
+        modal_submit="Editar"
+        
+        modal_txt=f"editar la contribución de {tapa.aprendiz} con fecha {tapa.fecha}"
+        tipo= "editar"
+        pk_tapa= request.POST['pk']
+         
+        form_update=TapaUpdateForm(request.POST, instance=tapa)
+    
+        
 
     if  request.method == 'POST' and "modal-confirmar" in request.POST:
         print(request.POST)
@@ -52,6 +61,17 @@ def tapa(request, modal_status="v"):
         
             messages.success(request, f'la contribución de {aprendiz.aprendiz} se eliminó correctamente!')
             return redirect('contabilidad-tapa')
+                
+        if request.POST['tipo'] == "editar":
+            aprendiz = Tapa.objects.get(id=int(request.POST['modal-pk'] ))
+            form.save()
+            aprendiz_nombre = tapas_unique.aprendiz.nombre
+            messages.success(
+                request, f'las tapas de {aprendiz_nombre} se modificaron correctamente!')
+            return redirect('contabilidad-tapa')
+        else:
+            form = TapaUpdateForm(instance=Tapa.objects.get(id=int(request.POST['modal-pk'] )))
+            
         
     context = {
         "titulo_pagina": titulo_pagina,
@@ -63,7 +83,8 @@ def tapa(request, modal_status="v"):
         "modal_status": modal_status,
         "modal_submit":modal_submit,
         "pk":pk_tapa,
-        "tipo":tipo
+        "tipo":tipo,
+        "form_update":form_update
         }
     return render(request, "contabilidad/tapa.html", context)
 
